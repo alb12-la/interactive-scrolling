@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- BootStrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style/typography.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<title>Interactive Scrolling Demo</title>
+</head>
+
+<body>
+	<!-- Navigation-->
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 position-absolute w-100 ">
+		<h5 class="my-0 mr-md-auto text-light font-weight-normal"></h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-light" href="#">Large</a>
+			<a class="p-2 text-light" href="#">Medium</a>
+			<a class="p-2 text-light" href="#">Small</a>
+		</nav>
+		<a class="btn btn-outline-primary" href="#">Sign in</a>
+	</div>
+
+	<script type="text/javascript">
+		let trigger_01;
+		let trigger_02;
+		let trigger_03;
+		let trigger_04;
+		let trigger_05;
+
+		function setVariables() {
+			// DEBUG console.log("window height:",window.innerHeight / 2);
+
+			// Set triggers
+			trigger_01 = document.getElementById("row-1").offsetTop + 1;
+			trigger_02 = document.getElementById("row-2").offsetTop - (window.innerHeight / 2);
+			trigger_03 = document.getElementById("row-3").offsetTop - (window.innerHeight / 2);
+			trigger_04 = document.getElementById("row-4").offsetTop - (window.innerHeight / 2);
+			trigger_05 = document.getElementById("row-4").offsetTop;
+
+			// Set illustration
+			window.illustrationContainer = document.getElementById("illustrationContainer");
+			window.illustration = document.getElementById("displaySlides");
+			illustration.setAttribute("style", "-webkit-transform:translate(-50%,-12.9%);");
+		}
+
+		function scrollToFirstSection() {
+			window.scrollTo({
+				top: trigger_01,
+				left: 0,
+				behavior: 'smooth'
+			});
+		}
+
+		function updateIllustrationOffset() {
+			var distanceFromTop = window.pageYOffset || document.documentElement.scrollTop;
+			// DEBUG console.log("distance from top:", distanceFromTop);			
+
+			/* Initialize */
+			if (distanceFromTop < trigger_01) {
+				illustrationContainer.className = "startPosition";
+				illustration.setAttribute("style", "transform: translate(-50%,-12.7%);");
+			}
+			/* trigger_01 */
+			else if (trigger_01 <= distanceFromTop && distanceFromTop < trigger_02) {
+				illustrationContainer.className = "positionA";
+				illustration.setAttribute("style", "transform: translate(-50%,-12.7%);")
+			}
+			/* trigger_02 */
+			else if (trigger_02 <= distanceFromTop && distanceFromTop < trigger_03) {
+				illustrationContainer.className = "positionB";
+				illustration.setAttribute("style", "transform:translate(-50%,-37.7%)");
+			}
+			/* trigger_03 */
+			else if (trigger_03 <= distanceFromTop && distanceFromTop < trigger_04) {
+				illustrationContainer.className = "positionC";
+				illustration.setAttribute("style", "transform:translate(-50%,-62.7%)");
+			}
+			/* trigger_04 */
+			else if (trigger_04 <= distanceFromTop && distanceFromTop < trigger_05) {
+				illustration.setAttribute("style", "transform:translate(-50%,-87.7%)");
+				illustrationContainer.className = "positionB";
+			}
+			/* trigger_05 */
+			else if (trigger_05 <= distanceFromTop) {
+				illustrationContainer.className = "bottomPosition"
+				illustration.setAttribute("style", "transform:translate(-50%,-87.7%)");
+			}
+		}
+
+		// Register events
+		window.onresize = setVariables;
+		window.onload = setVariables
+		window.onscroll = updateIllustrationOffset
+	</script>
+
+	<div id="hero">
+		<div class="heroTextContainer">
+			<div class="heroText">
+				<h1>Interactive Scolling</h1>
+				<p class="lead">
+					A small demo on interactive scrolling
+				</p>
+			</div>
+			<div onclick="scrollToFirstSection()" class="btn btn-primary">Lets see it</div>
+		</div>
+	</div>
+
+	<!-- Hero Image -->
+	<div class="d-flex overflow-hidden">
+		<div id="illustrationColumn" class="column">
+			<div id="illustrationContainer" class="startPosition">
+				<img id="displaySlides" class="inactive" src="assets/numbered_slides.png" ;>
+				<img id="laptop" class="" src="assets/mask.png" ;>
+			</div>
+		</div>
+
+		<div class="column">
+			<div id="row-1" class="section">
+				<div class="text-container">
+					<div class="mobile">
+						<img src="assets/slide-1.png">
+					</div>
+					<div class="text">
+						<h2>This is section 1</h2>
+						<p>Sections are visually separated from each other with a section break, typically consisting of
+							extra space between the sections, and sometimes also by a section heading for the latter
+							section. They are a concern in the process of typography and pagination, where it may be
+							desirable to have a page break follow a section break for the sake of aesthetics or
+							readability.</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="row-2" class="section">
+				<div class="text-container">
+					<div class="mobile">
+							<img src="assets/slide-2.png">
+					</div>
+					<div class="text">
+						<h2>This is section 2</h2>
+						<p>Sections are visually separated from each other with a section break, typically consisting of
+							extra space between the sections, and sometimes also by a section heading for the latter
+							section. They are a concern in the process of typography and pagination, where it may be
+							desirable to have a page break follow a section break for the sake of aesthetics or
+							readability.</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="row-3" class="section">
+				<div class="text-container">
+					<div class="mobile">
+							<img src="assets/slide-3.png">
+					</div>
+					<div class="text">
+						<h2>This is section 3</h2>
+						<p>Sections are visually separated from each other with a section break, typically consisting of
+							extra space between the sections, and sometimes also by a section heading for the latter
+							section. They are a concern in the process of typography and pagination, where it may be
+							desirable to have a page break follow a section break for the sake of aesthetics or
+							readability.</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="row-4" class="section">
+				<div class="text-container">
+					<div class="mobile">
+							<img src="assets/slide-4.png">
+					</div>
+					<div class="text">
+						<h2>This is section 4</h2>
+						<p>Sections are visually separated from each other with a section break, typically consisting of
+							extra space between the sections, and sometimes also by a section heading for the latter
+							section. They are a concern in the process of typography and pagination, where it may be
+							desirable to have a page break follow a section break for the sake of aesthetics or
+							readability.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer-container" class="py-md-5">
+		<div class="container">
+			<footer>
+				<div class="row">
+					<div class="col-12 col-md">
+						<!-- Intentionally blank-->
+					</div>
+					<div class="col-12 col-md text-light">
+						<h5 class="mt-0">Left</h5>
+						<ul class="list-unstyled text-small">
+							<li><a class="text-muted" href="#">Large Resource</a></li>
+							<li><a class="text-muted" href="#">Medium Resource</a></li>
+							<li><a class="text-muted" href="#">Small Resource</a></li>
+						</ul>
+					</div>
+					<div class="col-12 col-md text-light">
+						<h5 class="mt-0">Middle</h5>
+						<ul class="list-unstyled text-small">
+							<li><a class="text-muted" href="#">Large Resource</a></li>
+							<li><a class="text-muted" href="#">Medium Resource</a></li>
+							<li><a class="text-muted" href="#">Small Resource</a></li>
+						</ul>
+					</div>
+					<div class="col-12 col-md text-light">
+						<h5 class="mt-0">Right</h5>
+						<ul class="list-unstyled text-small">
+							<li><a class="text-muted" href="#">Large Resource</a></li>
+							<li><a class="text-muted" href="#">Medium Resource</a></li>
+							<li><a class="text-muted" href="#">Small Resource</a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</body>
+
+</html>
